@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import numpy as np
 from matplotlib import pyplot as plt
+from sochastic_gradient_descent import LinearClassifier as LM
 
 def main():
     #input data -of the form [X value, Y value, Bias term]
@@ -22,6 +23,26 @@ def main():
     #Print a possible hyperplane, that is separating the two classes.
     #we'll two points and draw the line between them(naive guess)
     plt.plot([-2,6],[6,0.5])
+    plt.show()
+
+    SVM = LM()
+
+    w = SVM.svm_sgd_plot(X,y)
+
+    # Add our test samples
+    plt.scatter(2,2, s=120, marker = "_", linewidths=2, color="yellow")
+    plt.scatter(4,3, s=120, marker = "+", linewidths=2, color="blue")
+
+    #Print the hyperplane calculated by svm_sdg()
+    x2 = [w[0], w[1], -w[1], w[0]]
+    x3 = [w[0], w[1], w[1], -w[0]]
+
+    x2x3 = np.array([x2,x3])
+
+    X, Y, U, V = zip(*x2x3)
+    ax = plt.gca()
+    ax.quiver(X,Y, U,V, scale=1, color="blue")
+
     plt.show()
 
 main()
